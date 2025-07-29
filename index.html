@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P-Tech Warranty Reviews</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css"/>
+    <!-- Bootstrap example -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+      <header class="site-header">
+      <div class="header-top">
+        <div class="logo">P-Tech Warranty</div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+      </div>
+      <nav class="navbar" id="navbar">
+        <a href="index.html">Home</a>
+        <a href="warranty.html">Warranty Plan</a>
+        <a href="claim.html">Claim</a>
+        <a href="partners.html">Shop Partners</a>
+        <a href="check.html">Warranty Checker</a>
+        <a href="admin.html">Admin</a>
+        <a href="services.html">Services</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-container-home">
+      <!-- Left Hero Text -->
+      <div class="hero-text-home">
+        <h1>Your Device's <br><span class="highlight">Best Friend<br></span> Is Here</h1>
+        <p>
+          Comprehensive warranty plans for students and professionals in Mukuyu, Murang'a.
+          Free repairs, fast service, and peace of mind.
+        </p><br>
+        <div class="hero-buttons">
+          <a href="warranty.html" class="btn first-btn">Get Your Warranty</a>
+          <a href="check.html" class="btn second-btn">Check Warranty Status</a>
+        </div>
+      </div>
+  
+      <div class="hero-image">
+        <div class="img-compare-container">
+          <img src="images/replaced.jpg" alt="Replaced Screen" class="img-compare after">
+          <img src="images/cracked.jpg" alt="Cracked Screen" class="img-compare before">
+          <div class="slider-line" id="slider-line"></div>
+        </div>
+      </div>      
+    </div>
+  </section>
+  
+    
+  <!-- Highlights -->
+  <section class="highlight-section fade-in">
+    <h2>What's Included in Your Warranty</h2>
+    <p class="section-subtext">
+      Our comprehensive warranty plans cover the most common smartphone issues, ensuring you're never left without your device.
+    </p>
+  
+    <div class="highlight-container">
+      <div class="highlight-card">
+        <i class="fas fa-mobile-alt highlight-icon"></i>
+        <h3>Free Screen Replacement</h3>
+        <p>Complete screen replacement coverage for all warranty members</p>
+      </div>
+  
+      <div class="highlight-card">
+        <i class="fas fa-battery-three-quarters highlight-icon"></i>
+        <h3>Free Battery Replacement</h3>
+        <p>Battery health monitoring and free replacement when needed</p>
+      </div>
+  
+      <div class="highlight-card">
+        <i class="fas fa-charging-station highlight-icon"></i>
+        <h3>Free Charging System Repairs</h3>
+        <p>Charging port and cable issues covered under warranty</p>
+      </div>
+    </div>
+  </section>
+  
+<!-- Enhanced Stats Section -->
+  <section class="cta-section fade-in">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-smile-beam"></i>
+          </div>
+          <div class="circle">
+            <h2 class="stat-number" data-target="500">0</h2>
+          </div>
+          <p>Happy Customers</p>
+        </div>
+    
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-tools"></i>
+          </div>
+          <div class="circle">
+            <h2 class="stat-number" data-target="1000">0</h2>
+          </div>
+          <p>Devices Repaired</p>
+        </div>
+    
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="circle">
+            <h2 class="stat-number" data-target="24">0</h2>
+          </div>
+          <p>Average Repair Time</p>
+        </div>
+    
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="circle">
+            <h2 class="stat-number" data-target="99">0</h2>
+          </div>
+          <p>Customer Satisfaction</p>
+        </div>
+      </div>
+    </section>  
+ 
+  <section class="brands-section">
+    <h2>We Repair These Brands including M-Kopa Smartphones</h2>
+    <div class="brand-logos">
+      <img src="images/logo/samsung.png" alt="Samsung">
+      <img src="images/logo/oppo.png" alt="Oppo">
+      <img src="images/logo/infinix.png" alt="Infinix">
+      <img src="images/logo/itel.png" alt="Itel">
+      <img src="images/logo/apple.png" alt="iPhone">
+      <img src="images/logo/tecno.png" alt="Tecno">
+      <img src="images/logo/huawei.png" alt="Huawei">
+      <img src="images/logo/redmi.png" alt="Redmi">
+    </div>
+  </section>
+  
+  <!-- Testimonials -->
+  <section class="testimonial-section fade-in">
+    <div class="cta-container">
+      <h2>Ready to Protect Your Device?</h2>
+      <p>Join hundreds of satisfied customers who trust <strong>P-Tech Warranty</strong> for their smartphone protection needs.</p>
+      <div class="hero-buttons">
+        <a href="warranty.html" class="btn first-btn">View Warranty Plans</a>
+        <a href="contact.html" class="btn second-btn">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-container">
+  
+      <!-- Column 1 -->
+      <div class="footer-column">
+        <h3>P-Tech Warranty</h3>
+        <p>Professional smartphone repair and warranty services in Mukuyu, Murang'a. We provide reliable, affordable warranty plans for students and professionals.</p><br>
+        <p><i class="fas fa-map-marker-alt"></i> Mukuyu, Murang'a, Kenya</p>
+        <p><i class="fas fa-phone-alt"></i> +254 704 718140 / +254 787 971161</p>
+        <p><i class="fas fa-envelope"></i> peconne254@gmail.com</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="warranty.html">Warranty Plans</a></li>
+          <li><a href="claim.html">Submit Claim</a></li>
+          <li><a href="check.html">Check Warranty</a></li>
+          <li><a href="services.html">Our Services</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="reviews.html">Customer Reviews</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+  
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-socials">
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://wa.me/254704718140" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      <p class="copyright-text">&copy; 2025 P-Tech Warranty. All Rights Reserved.</p>
+    </div>       
+  </footer>
+  
+  <!-- Floating Search Button -->
+  <button id="openSearchBtn" class="floating-search">🔍</button>
+
+  <!-- Search Modal -->
+  <div id="searchModal" class="search-modal">
+    <div class="search-content">
+      <input type="text" id="searchInput" placeholder="Search P-Tech..." />
+      <button id="closeSearchBtn" class="close-search">✖</button>
+      <div id="searchResults" class="search-results"></div>
+    </div>
+  </div>
+
+  <script>
+    // Navbar toggle for mobile
+    function toggleMenu() {
+    const navbar = document.getElementById('navbar');
+    navbar.classList.toggle('active');
+  }
+  // Close nav on link click (mobile UX)
+  document.querySelectorAll('.navbar a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navbar').classList.remove('active');
+    });
+  });
+
+    // Animate stats counter
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 100; // smaller is faster
+  
+    counters.forEach(counter => {
+      const animate = () => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+  
+        const increment = Math.ceil(target / speed);
+  
+        if (count < target) {
+          counter.innerText = count + increment;
+          setTimeout(animate, 30);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      animate();
+    });
+  
+    // Floating Search Button Logic
+    const pages = [
+    { title: "Home", url: "index.html" },
+    { title: "Warranty Plan", url: "warranty.html" },
+    { title: "Register Warranty", url: "register.html" },
+    { title: "Submit Claim", url: "claim.html" },
+    { title: "Warranty Checker", url: "check.html" },
+    { title: "Services", url: "services.html" },
+    { title: "Customer Reviews", url: "reviews.html" },
+    { title: "Contact Us", url: "contact.html" }
+  ];
+
+  const openSearchBtn = document.getElementById("openSearchBtn");
+  const searchModal = document.getElementById("searchModal");
+  const closeSearchBtn = document.getElementById("closeSearchBtn");
+  const searchInput = document.getElementById("searchInput");
+  const searchResults = document.getElementById("searchResults");
+
+  openSearchBtn.onclick = () => {
+    searchModal.classList.add("active");
+    searchInput.focus();
+  };
+
+  closeSearchBtn.onclick = () => {
+    searchModal.classList.remove("active");
+    searchInput.value = "";
+    searchResults.innerHTML = "";
+  };
+
+  window.onclick = (e) => {
+    if (e.target === searchModal) {
+      closeSearchBtn.click();
+    }
+  };
+
+  searchInput.oninput = function () {
+    const query = this.value.toLowerCase();
+    searchResults.innerHTML = "";
+
+    if (!query) return;
+
+    const matches = pages.filter(page =>
+      page.title.toLowerCase().includes(query)
+    );
+
+    if (matches.length === 0) {
+      searchResults.innerHTML = "<p>No results found.</p>";
+    } else {
+      matches.forEach(page => {
+        const div = document.createElement("div");
+        div.className = "search-result-item";
+        div.textContent = page.title;
+        div.onclick = () => window.location.href = page.url;
+        searchResults.appendChild(div);
+      });
+    }
+  };
+    // Fade-in animation on scroll
+    const fadeEls = document.querySelectorAll('.fade-in');
+  
+    const fadeObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.2,
+    });
+  
+    fadeEls.forEach(el => fadeObserver.observe(el));
+
+    const container = document.querySelector('.img-compare-container');
+const beforeImg = container.querySelector('.before');
+const slider = document.getElementById('slider-line');
+const beforeText = document.querySelector('.before-text');
+const afterText = document.querySelector('.after-text');
+
+let isDragging = false;
+
+// Set the slider to the center initially
+slider.style.left = '50%';
+
+// Function to handle dragging logic
+const handleDrag = (e) => {
+  const rect = container.getBoundingClientRect();
+  let offsetX;
+
+  // Check if it's a touch event or mouse event
+  if (e.type.startsWith('touch')) {
+    offsetX = e.touches[0].clientX - rect.left;
+  } else {
+    offsetX = e.clientX - rect.left;
+  }
+
+  const percentage = (offsetX / rect.width) * 100;
+
+  // Prevent the slider from going out of bounds
+  if (percentage >= 0 && percentage <= 100) {
+    beforeImg.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+    slider.style.left = `${percentage}%`;
+
+    // Change text based on slider position
+    if (percentage < 50) {
+      beforeText.style.opacity = 1;
+      afterText.style.opacity = 0;
+    } else {
+      beforeText.style.opacity = 0;
+      afterText.style.opacity = 1;
+    }
+  }
+};
+
+// When mouse or touch starts dragging
+slider.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  document.body.style.userSelect = 'none'; // Prevent text selection during drag
+});
+
+slider.addEventListener('touchstart', (e) => {
+  e.preventDefault();  // Prevent default action to avoid unwanted scrolling
+  isDragging = true;
+  document.body.style.userSelect = 'none'; // Prevent text selection during drag
+});
+
+// When mouse moves or touch moves, update the slider position if dragging
+container.addEventListener('mousemove', (e) => {
+  if (isDragging) {
+    handleDrag(e);
+  }
+});
+
+container.addEventListener('touchmove', (e) => {
+  if (isDragging) {
+    handleDrag(e);
+  }
+});
+
+// When mouse or touch ends, stop dragging
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+  document.body.style.userSelect = ''; // Restore text selection
+});
+
+document.addEventListener('touchend', () => {
+  isDragging = false;
+  document.body.style.userSelect = ''; // Restore text selection
+});
+
+ </script>
+  
+</body>
+</html>

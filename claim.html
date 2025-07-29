@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P-Tech Warranty Claim</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-top">
+      <div class="logo">P-Tech Warranty</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </div>
+    <nav class="navbar" id="navbar">
+      <a href="index.html">Home</a>
+      <a href="warranty.html">Warranty Plan</a>
+      <a href="claim.html">Claim</a>
+      <a href="partners.html">Shop Partners</a>
+      <a href="check.html">Warranty Checker</a>
+      <a href="admin.html">Admin</a>
+      <a href="services.html">Services</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="claim-header text-center py-4">
+    <h1>Submit Warranty Claim and Register your Device</h1>
+    <p>We'll review your claim and get back to you in less than 24 Hours
+  </section>
+
+  <section class="claim-form-section container">
+    <h2 class="text-center mb-4">Warranty Claim Form</h2>
+    <form class="claim-form" id="warrantyClaimForm">
+      <div class="row">
+        <!-- Left Column -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="name">Full Name*</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="email">Email Address*</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="phone">Phone Number*</label>
+            <input type="tel" id="phone" name="phone" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="model">Device Model*</label>
+            <input type="text" id="model" name="model" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="serial">Device Serial Number*</label>
+            <input type="text" id="serial" name="serial" class="form-control" required>
+          </div>
+          <div class="form-check mb-3">
+            <input type="checkbox" id="student" name="student" class="form-check-input">
+            <label for="student" class="form-check-label">I am a student (for discounted rates)</label>
+          </div>
+          <div class="mb-3" id="studentIdGroup" style="display: none;">
+            <label for="studentId">Student ID Number</label>
+            <input type="text" id="studentId" name="studentId" class="form-control">
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="paymentMethod">Payment Method*</label>
+            <select id="paymentMethod" name="paymentMethod" class="form-control" required>
+              <option value="">Select Payment Method</option>
+              <option value="M-PESA">M-PESA</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Cash">Cash</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="transactionCode">Transaction Code / Reference*</label>
+            <input type="text" id="transactionCode" name="transactionCode" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="paymentAmount">Amount Paid (KES)*</label>
+            <input type="number" id="paymentAmount" name="paymentAmount" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="paymentDate">Payment Date*</label>
+            <input type="date" id="paymentDate" name="paymentDate" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="documents">Supporting Documents (Payment Proof)</label>
+            <input type="file" id="documents" name="documents" class="form-control" accept=".jpg,.png,.pdf,.doc,.docx">
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Submit Warranty Claim</button>
+          <p id="formStatus" class="text-center mt-3"></p>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <div class="submission-feedback text-center mt-3">
+    <div id="spinner" class="spinner" style="display: none;"></div>
+    <div id="successAnimation" class="success-checkmark" style="display: none;">
+      <div class="check-icon">
+        <span class="icon-line line-tip"></span>
+        <span class="icon-line line-long"></span>
+        <div class="icon-circle"></div>
+        <div class="icon-fix"></div>
+      </div>
+      <p class="mt-2">Claim submitted successfully!</p>
+    </div>
+  </div>
+
+<!-- 📝 Important Notes -->
+<section class="claim-notes container my-5 px-3 py-4">
+  <div class="notes-wrapper fancy-notes p-4 rounded-4">
+    <h3 class="text-center mb-4 text-white section-title animate-fade-slide">📌 Important Notes</h3>
+    <ul class="notes-list list-unstyled m-0 p-0">
+      <li class="animate-fade-slide">
+        <span class="icon">✔️</span>
+        <div><strong>Accurate Details:</strong> Provide correct and complete info for faster claim processing.</div>
+      </li>
+      <li class="animate-fade-slide">
+        <span class="icon">⏱</span>
+        <div><strong>Review Time:</strong> Claims are reviewed within <u>24 business hours</u>.</div>
+      </li>
+      <li class="animate-fade-slide">
+        <span class="icon">🎓</span>
+        <div><strong>Student Discounts:</strong> Only with a valid <u>Student ID</u> uploaded during registration.</div>
+      </li>
+      <li class="animate-fade-slide">
+        <span class="icon">📧</span>
+        <div><strong>Confirmation Email:</strong> You'll get an email once your registration is complete.</div>
+      </li>
+      <li class="animate-fade-slide">
+        <span class="icon">📎</span>
+        <div><strong>Keep Records:</strong> Save your reference number and confirmation email.</div>
+      </li>
+      <li class="animate-fade-slide">
+        <span class="icon">🛡️</span>
+        <div><strong>Proof of Purchase:</strong> May be requested during warranty checks.</div>
+      </li>
+      <li class="animate-fade-slide">
+        <span class="icon">🌍</span>
+        <div><strong>Region:</strong> Supported in Kenya, Uganda, Tanzania, and Somalia.</div>
+      </li>
+      <li class="animate-fade-slide">
+        <span class="icon">📲</span>
+        <div><strong>Mobile First:</strong> This form is optimized for mobile devices.</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+  <script>
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBFynS9-iYS7GxTeCzq-QPi9HRJr4qIRzY",
+  authDomain: "ptech-warranty-website.firebaseapp.com",
+  projectId: "ptech-warranty-website",
+  storageBucket: "ptech-warranty-website.appspot.com",
+  messagingSenderId: "335295749830",
+  appId: "1:335295749830:web:2ba5d66219eb6f04d6c1c7",
+  measurementId: "G-NFKHFN19LZ"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Initialize EmailJS
+emailjs.init("fbVNsTIoBvJGuvFnZ");
+
+const form = document.getElementById("warrantyClaimForm");
+const formStatus = document.getElementById("formStatus");
+const studentCheckbox = document.getElementById("student");
+const studentIdGroup = document.getElementById("studentIdGroup");
+
+// Toggle student ID field
+studentCheckbox.addEventListener("change", () => {
+  studentIdGroup.style.display = studentCheckbox.checked ? "block" : "none";
+});
+
+// Calculate expiry date based on payment amount and student status
+function calculateExpiryDate(paymentDateStr, isStudent, paymentAmount) {
+  const date = new Date(paymentDateStr);
+  const amount = parseInt(paymentAmount);
+  let months = 0;
+
+  if (isStudent) {
+    if (amount === 500) months = 6;
+    else if (amount === 800) months = 12;
+  } else {
+    if (amount === 600) months = 6;
+    else if (amount === 1000 || amount === 2500) months = 12;
+  }
+
+  date.setMonth(date.getMonth() + months);
+  return date;
+}
+
+// Form submit handler
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const spinner = document.getElementById("spinner");
+  const successAnimation = document.getElementById("successAnimation");
+
+  formStatus.textContent = "";
+  spinner.style.display = "block";
+  successAnimation.style.display = "none";
+
+  const currentDate = new Date().toLocaleString();
+  const isStudent = studentCheckbox.checked;
+  const paymentAmount = form.paymentAmount.value.trim();
+  const paymentDateStr = form.paymentDate.value.trim();
+  const expiryDate = calculateExpiryDate(paymentDateStr, isStudent, paymentAmount);
+  const isActive = expiryDate > new Date();
+
+  // Fetch and clean values
+  const phone = form.phone.value.trim();
+  const email = form.email.value.trim();
+  const rawTransactionCode = form.transactionCode.value.trim().toUpperCase();
+
+  // Validation rules
+  const phonePattern = /^(07\d{8}|01\d{8}|2547\d{8})$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const transactionCodePattern = /^[A-Z0-9]{10}$/;
+
+  // 🚫 Invalid phone
+  if (!phonePattern.test(phone)) {
+    spinner.style.display = "none";
+    formStatus.textContent = "⚠️ Enter a valid Kenyan phone number (e.g., 0712345678 or 254712345678)";
+    formStatus.style.color = "orange";
+    return;
+  }
+
+  // 🚫 Invalid email
+  if (!emailPattern.test(email)) {
+    spinner.style.display = "none";
+    formStatus.textContent = "⚠️ Enter a valid email address (e.g., example@gmail.com)";
+    formStatus.style.color = "orange";
+    return;
+  }
+
+  // 🚫 Invalid M-PESA / bank code
+  if (!transactionCodePattern.test(rawTransactionCode)) {
+    spinner.style.display = "none";
+    formStatus.textContent = "⚠️ Enter a valid M-PESA or Bank Transaction Code (exactly 10 characters)";
+    formStatus.style.color = "orange";
+    return;
+  }
+
+  // ✅ All validated - prepare data object
+  const data = {
+    name: form.name.value.trim(),
+    email,
+    phone,
+    model: form.model.value.trim(),
+    serial: form.serial.value.trim(),
+    isStudent,
+    studentId: form.studentId.value.trim(),
+    paymentMethod: form.paymentMethod.value.trim(),
+    transactionCode: rawTransactionCode,
+    paymentAmount,
+    paymentDate: paymentDateStr,
+    status: "Pending",
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    formattedTimestamp: currentDate,
+    expiryDate: firebase.firestore.Timestamp.fromDate(expiryDate),
+    isActive
+  };
+
+  // ✅ Duplicate Check (Check for Duplicate Phone Number)
+  try {
+    const duplicateQuery = db.collection("warranty_claims")
+      .where("phone", "==", data.phone);  // Check for existing phone number
+
+    const snapshot = await duplicateQuery.get();
+    if (!snapshot.empty) {
+      spinner.style.display = "none";
+      formStatus.textContent = "❌ Duplicate phone number detected! This phone number is already associated with a warranty claim.";
+      formStatus.style.color = "red";
+      return;  // Exit if duplicate is found
+    }
+  } catch (error) {
+    console.error("❌ Error checking for duplicate phone number:", error);
+    spinner.style.display = "none";
+    formStatus.textContent = "⚠️ Unable to verify duplicates. Try again.";
+    formStatus.style.color = "orange";
+    return;
+  }
+
+  // ✅ Generate PDF with jsPDF
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(12);
+  doc.text("📄 P-Tech Warranty Claim Form", 10, 10);
+  doc.text(`👤 Name: ${data.name}`, 10, 20);
+  doc.text(`📧 Email: ${data.email}`, 10, 30);
+  doc.text(`📱 Phone: ${data.phone}`, 10, 40);
+  doc.text(`📦 Model: ${data.model}`, 10, 50);
+  doc.text(`🔢 Serial: ${data.serial}`, 10, 60);
+  doc.text(`🎓 Student: ${data.isStudent ? "Yes" : "No"}`, 10, 70);
+  if (data.isStudent && data.studentId) {
+    doc.text(`🎫 Student ID: ${data.studentId}`, 10, 80);
+  }
+  doc.text(`💳 Payment Method: ${data.paymentMethod}`, 10, 90);
+  doc.text(`🔐 Transaction Code: ${data.transactionCode}`, 10, 100);
+  doc.text(`💰 Amount Paid: KES ${data.paymentAmount}`, 10, 110);
+  doc.text(`📅 Payment Date: ${data.paymentDate}`, 10, 120);
+  doc.text(`🕒 Submitted: ${data.formattedTimestamp}`, 10, 130);
+  const pdfBase64 = doc.output("datauristring").split(",")[1];
+
+  // ✅ Save to Firestore
+  try {
+    await db.collection("warranty_claims").add(data);
+    console.log("✅ Firestore saved successfully");
+  } catch (err) {
+    console.error("❌ Firestore Error:", err);
+    spinner.style.display = "none";
+    formStatus.textContent = "❌ Failed to save your claim. Try again.";
+    formStatus.style.color = "red";
+    return;
+  }
+
+  // ✅ Send Email
+  try {
+    await emailjs.send("service_ptech", "warranty_registration", {
+      ...data,
+      attachment: pdfBase64
+    });
+
+    console.log("✅ Email sent successfully");
+    form.reset();
+    studentIdGroup.style.display = "none";
+    spinner.style.display = "none";
+    successAnimation.style.display = "block";
+
+    setTimeout(() => {
+      successAnimation.style.display = "none";
+      location.reload();
+    }, 5000);
+  } catch (err) {
+    console.error("❌ EmailJS Error:", err);
+    spinner.style.display = "none";
+    formStatus.textContent = "❌ Email failed. Try again.";
+    formStatus.style.color = "red";
+  }
+});
+  </script>
+  
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>P-Tech Warranty</h3>
+        <p>Professional smartphone repair and warranty services in Mukuyu, Murang'a.</p>
+        <p><i class="fas fa-map-marker-alt"></i> Mukuyu, Murang'a, Kenya</p>
+        <p><i class="fas fa-phone-alt"></i> +254 704 718140 / +254 787 971161</p>
+        <p><i class="fas fa-envelope"></i> peconne254@gmail.com</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="warranty.html">Warranty Plans</a></li>
+          <li><a href="claim.html">Submit Claim</a></li>
+          <li><a href="checker.html">Check Warranty</a></li>
+          <li><a href="services.html">Our Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="reviews.html">Customer Reviews</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://wa.me/254704718140"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      <p>&copy; 2025 P-Tech Warranty. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

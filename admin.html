@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard - P-Tech Warranty</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-trendline"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.2.0/dist/chartjs-chart-matrix.min.js"></script>
+
+  <!-- Stylesheets -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="auth-loading">
+  
+  <!-- 🔐 Loading Screen -->
+  <div id="loadingScreen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #6a11cb, #2575fc); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; color: white; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px;">
+    <div class="glow-text mb-3" style="font-size: 1.8rem; font-weight: bold; animation: glow 2s infinite alternate;">🔐 Verifying Admin Access...</div>
+    <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;"></div>
+    <p class="mt-3 fs-6">Please wait while we load the dashboard</p>
+  </div>
+
+  <style>
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #6a11cb, 0 0 20px #2575fc; }
+      100% { text-shadow: 0 0 10px #fff, 0 0 15px #fff, 0 0 25px #6a11cb, 0 0 30px #2575fc; }
+    }
+    .auth-loading main, .auth-loading header, .auth-loading footer { display: none !important; }
+    @media (max-width: 576px) {
+      #loadingScreen .glow-text { font-size: 1.3rem; }
+      #loadingScreen p { font-size: 0.9rem; }
+    }
+  </style>
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-top d-flex justify-content-between align-items-center px-3 py-2 bg-dark text-white">
+    <div class="logo fw-bold fs-4">P-Tech Warranty Admin</div>
+    <div>
+      <button id="themeToggle" class="btn btn-sm btn-outline-light me-2">🌓 Theme</button>
+      <button id="logoutBtn" class="btn btn-sm btn-danger">Logout</button>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-gradient px-3" style="background: linear-gradient(90deg, #6a11cb, #2575fc);">
+    <a class="navbar-brand fw-bold text-white" href="#">P-Tech Admin</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav" aria-controls="adminNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="adminNav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="warranty.html">Warranty Plan</a></li>
+        <li class="nav-item"><a class="nav-link" href="claim.html">Claim</a></li>
+        <li class="nav-item"><a class="nav-link" href="partners.html">Shop Partners</a></li>
+        <li class="nav-item"><a class="nav-link" href="admin.html">Admin</a></li>
+        <li class="nav-item"><a class="nav-link" href="check.html">Check Warranty</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="reviews.html">Reviews</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- MAIN DASHBOARD -->
+<main class="dashboard container py-4">
+
+  <!-- SUMMARY CARDS -->
+  <section class="summary-cards row g-4 mb-4">
+    <div class="col-md-3">
+      <div class="card shadow-sm glass-card text-center">
+        <div class="card-body">
+          <h5>Total Claims</h5>
+          <h3 id="total-claims-count">0</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm glass-card text-center">
+        <div class="card-body">
+          <h5>Approved</h5>
+          <h3 id="approved-count">0</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm glass-card text-center">
+        <div class="card-body">
+          <h5>Rejected</h5>
+          <h3 id="rejected-count">0</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm glass-card text-center">
+        <div class="card-body">
+          <h5>Pending</h5>
+          <h3 id="pending-count">0</h3>
+        </div>
+      </div>
+    </div>
+    <div class="summary-card" id="total-payments">
+      <div class="card-icon">💰</div>
+      <div class="card-content">
+        <h3>Total Payments</h3>
+        <p class="amount">KES 0</p>
+      </div>
+  </section>
+
+  <!-- 📊 Shop Partners Summary & Sales -->
+<section class="shop-sales-summary mb-5">
+
+  <!-- 🔢 Summary Boxes -->
+  <div class="row text-center mb-4 g-3">
+    <div class="col-md-4 col-12">
+      <div class="card shadow-sm border-0 p-3 h-100">
+        <h6>Total Shops</h6>
+        <div id="totalShops" class="h4">0</div>
+      </div>
+    </div>
+    <div class="col-md-4 col-12">
+      <div class="card shadow-sm border-0 p-3 h-100">
+        <h6>Total Commissions</h6>
+        <div id="totalCommissions" class="h4 text-success">KES 0</div>
+      </div>
+    </div>
+    <div class="col-md-4 col-12">
+      <div class="card shadow-sm border-0 p-3 h-100">
+        <h6>Top Shop</h6>
+        <div id="topShop" class="h4 text-primary">-</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🏆 Shop Leaderboard Table -->
+  <div class="table-responsive mb-4">
+    <h5 class="mb-3">🏆 Shop Leaderboard</h5>
+    <table class="table table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Shop Name</th>
+          <th>Sales</th>
+          <th>Total Amount</th>
+          <th>Commission</th>
+        </tr>
+      </thead>
+      <tbody id="shopLeaderboardBody"></tbody>
+    </table>
+  </div>
+
+  <!-- 📋 Detailed Shop Sales Table -->
+  <div class="table-responsive">
+    <h5 class="mb-3">📋 All Shop Sales</h5>
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Ref</th>
+          <th>Customer</th>
+          <th>Device</th>
+          <th>Plan</th>
+          <th>Amount</th>
+          <th>Seller</th>
+          <th>Proof</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="shopSalesTableBody"></tbody>
+    </table>
+  </div>
+
+</section>
+
+  <div class="summary-card" id="Dashboard-Summary">
+    <div class="card-body">
+      <h5 class="card-title mb-3">📊 Dashboard Summary Insights</h5>
+      <p id="summaryBlock" class="fs-6 text-muted">Loading summary...</p>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <section class="filters row g-2 mb-4">
+    <div class="col-md">
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-person"></i></span>
+        <input type="text" class="form-control" id="searchName" placeholder="Search by Name"/>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-hash"></i></span>
+        <input type="text" class="form-control" id="searchSerial" placeholder="Search by Serial"/>
+      </div>
+    </div>
+    <div class="col-md-auto">
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-filter"></i></span>
+        <select class="form-select" id="statusFilter">
+          <option value="">All Statuses</option>
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+          <option value="Pending">Pending</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-auto">
+      <button class="btn btn-success w-100" id="exportBtn">
+        <i class="bi bi-download"></i> Export CSV
+      </button>
+    </div>
+  </section>
+
+  <!-- CHARTS -->
+  <section class="row g-4 mb-4">
+    <div class="col-md-6">
+      <div class="card glass-card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Claims Status Distribution</h5>
+          <canvas id="statusChart" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card glass-card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Devices Model Chart</h5>
+          <canvas id="modelChart" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <!-- Details Modal -->
+  <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="detailsModalLabel">Claim Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="detailsBody"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLAIMS LIST -->
+  <section class="claims-container row g-4" id="claimsContainer"></section>
+
+  <div class="card p-3 mb-4">
+    <h5 class="mb-3">Payments Breakdown</h5>
+    <canvas id="stackedComboChart" height="100"></canvas>
+  </div>
+
+
+  <!-- DASHBOARD SUMMARY -->
+  <div class="row g-4 mb-4" id="dashboard-summary">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title">👥 Total Customers</h5>
+          <h2 id="totalCustomers" class="fw-bold text-primary">0</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title">✅ Active Warranties</h5>
+          <h2 id="activeWarranties" class="fw-bold text-success">0</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title">❌ Expired Warranties</h5>
+          <h2 id="expiredWarranties" class="fw-bold text-danger">0</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+  <!-- SCRIPT -->
+  <script src="admin-dashboard.js" type="module"></script>
+
+</body>
+</html>

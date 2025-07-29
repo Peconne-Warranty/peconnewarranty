@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>P-Tech Warranty Plans</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-top">
+      <div class="logo">P-Tech Warranty</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </div>
+    <nav class="navbar" id="navbar">
+      <a href="index.html">Home</a>
+      <a href="warranty.html">Warranty Plan</a>
+      <a href="claim.html">Claim</a>
+      <a href="partners.html">Shop Partners</a>
+      <a href="check.html">Warranty Checker</a>
+      <a href="admin.html">Admin</a>
+      <a href="services.html">Services</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero small-hero fade-in">
+    <h1 class="mb-3">Choose Your Warranty Plan</h1>
+    <p class="mb-4">Comprehensive protection plans designed for students and professionals.</p>
+  
+    <!-- 📌 This section moved to bottom -->
+    <div class="mpesa-note mt-4">
+      <i class="fas fa-info-circle"></i>
+      You will pay using <strong>Buy Goods & Services</strong> – Till Number: <strong>5248941</strong>.<br/>
+      The amount depends on your selected plan. Please click the desired plan to proceed to payment.
+    </div>
+  </section>
+  
+
+  <!-- Student Plans -->
+  <section class="plans-section fade-in">
+    <h2>Student Plans</h2>
+    <p class="plan-intro">Special discounted rates for students with valid student ID</p>
+    <div class="container">
+      <div class="plans">
+        <div class="plan-card">
+          <h3>Student Basic</h3>
+          <p class="price">KSh 500 / 6 months</p>
+          <ul>
+            <li>Free screen replacement</li>
+            <li>Free battery replacement</li>
+            <li>Free charging port repair</li>
+            <li>2–6 hours repair guarantee</li>
+            <li>Basic phone support</li>
+          </ul>
+          <p class="note">*Student ID verification required</p>
+          <a href="#" class="primary-btn select-plan" data-plan="Student Basic" data-amount="500">Select Plan</a>
+        </div>
+
+        <div class="plan-card">
+          <h3>Student Premium</h3>
+          <p class="price">KSh 800 / 12 months</p>
+          <ul>
+            <li>Free screen replacement</li>
+            <li>Free battery replacement</li>
+            <li>Free charging port repair</li>
+            <li>Water damage checking</li>
+            <li>1–4 hours repair guarantee</li>
+            <li>Priority support</li>
+            <li>Loaner device available</li>
+          </ul>
+          <p class="note">*Student ID verification required</p>
+          <a href="#" class="primary-btn select-plan" data-plan="Student Premium" data-amount="800">Select Plan</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regular Plans -->
+  <section class="plans-section fade-in">
+    <h2>Regular Plans</h2>
+    <p class="plan-intro">Professional warranty plans for individuals and businesses</p>
+    <div class="container">
+      <div class="plans">
+        <div class="plan-card">
+          <h3>Basic Plan</h3>
+          <p class="price">KSh 600 / 6 months</p>
+          <ul>
+            <li>Free screen replacement</li>
+            <li>Free battery replacement</li>
+            <li>Free charging port repair</li>
+            <li>2–6 hours repair guarantee</li>
+            <li>Phone & email support</li>
+          </ul>
+          <a href="#" class="primary-btn select-plan" data-plan="Basic Plan" data-amount="600">Select Plan</a>
+        </div>
+
+        <div class="plan-card">
+          <h3>Premium Plan</h3>
+          <p class="price">KSh 1,000 / 12 months</p>
+          <ul>
+            <li>Free screen replacement</li>
+            <li>Free battery replacement</li>
+            <li>Free charging port repair</li>
+            <li>Water & accidental damage checking</li>
+            <li>1–4 hours repair guarantee</li>
+            <li>Priority support</li>
+            <li>Loaner device available</li>
+          </ul>
+          <a href="#" class="primary-btn select-plan" data-plan="Premium Plan" data-amount="1000">Select Plan</a>
+        </div>
+
+        <div class="plan-card">
+          <h3>Business Plan</h3>
+          <p class="price">KSh 2,500 / 12 months</p>
+          <ul>
+            <li>Screen replacements (2x)</li>
+            <li>Free battery replacement</li>
+            <li>Free charging port repair</li>
+            <li>Water & accidental damage coverage</li>
+            <li>Same-day repair guarantee</li>
+            <li>24/7 priority support</li>
+            <li>On-site pickup/delivery</li>
+          </ul>
+          <a href="#" class="primary-btn select-plan" data-plan="Business Plan" data-amount="2500">Select Plan</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="modal-overlay hidden">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h3>Payment Instructions</h3>
+    <p id="selected-plan-popup"></p>
+    <ol>
+      <li>Go to <strong>MPesa</strong> on your phone</li>
+      <li>Select <strong>Lipa na MPesa</strong></li>
+      <li>Choose <strong>Buy Goods and Services</strong></li>
+      <li>Enter Till Number: <strong>5248941</strong></li>
+      <li>Enter the correct amount for your selected plan</li>
+      <li>Confirm and complete the payment</li>
+    </ol>
+    <p id="amount-popup" class="fw-bold"></p>
+    <a href="claim.html" class="primary-btn mt-2">I Have Paid – Continue Registration</a>
+  </div>
+</div>
+
+  <!-- FAQ -->
+  <section class="faq-section fade-in">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq">
+      <button class="faq-question">Who qualifies for the student plan?</button>
+      <div class="faq-answer">Anyone with a valid and current student ID from a recognized institution in Kenya.</div>
+
+      <button class="faq-question">How do I verify my student status?</button>
+      <div class="faq-answer">Upload a photo of your student ID during the claim or registration process.</div>
+
+      <button class="faq-question">What phones are supported?</button>
+      <div class="faq-answer">We support Tecno, Infinix, Oppo, Itel, iPhone, Samsung, Huawei, Redmi, Vivo, and more.</div>
+
+      <button class="faq-question">How do I submit a warranty claim?</button>
+      <div class="faq-answer">Go to the <a href="claim.html">Claim Page</a>, fill out the form, and attach required documents.</div>
+
+      <button class="faq-question">What’s the repair turnaround time?</button>
+      <div class="faq-answer">Standard repairs take 24–48 hours depending on the plan. Business plan users get same-day service.</div>
+
+      <button class="faq-question">Can I upgrade my plan?</button>
+      <div class="faq-answer">Yes, you can upgrade at any time by paying the difference. Contact support to process the upgrade.</div>
+    </div>
+  </section>
+
+  <script>
+    // ✅ Toggle mobile navigation menu
+    function toggleMenu() {
+      const navbar = document.getElementById('navbar');
+      navbar.classList.toggle('active');
+    }
+  
+    // ✅ Close navbar on link click (mobile)
+    document.querySelectorAll('.navbar a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navbar').classList.remove('active');
+      });
+    });
+  
+   // ✅ FAQ accordion toggle
+document.querySelectorAll(".faq-question").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const answer = btn.nextElementSibling;
+    const isOpen = answer.classList.contains("show");
+
+    // Close all answers
+    document.querySelectorAll(".faq-answer").forEach(a => a.classList.remove("show"));
+    document.querySelectorAll(".faq-question").forEach(b => b.classList.remove("active"));
+
+    // Toggle current only if it wasn't already open
+    if (!isOpen) {
+      answer.classList.add("show");
+      btn.classList.add("active");
+    }
+  });
+});
+
+    // ✅ Scroll-triggered fade-in effect
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const fadeObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+  
+    fadeEls.forEach(el => fadeObserver.observe(el));
+  
+    // ✅ Plan selection opens modal with payment instructions
+    document.querySelectorAll('.select-plan').forEach(button => {
+      button.addEventListener('click', function (e) {
+        e.preventDefault();
+        const selectedPlan = this.getAttribute('data-plan');
+        const amount = this.getAttribute('data-amount');
+  
+        // Set modal content
+        document.getElementById('selected-plan-popup').textContent = `You selected: ${selectedPlan}`;
+        document.getElementById('amount-popup').textContent = `Amount to pay: KSh ${amount}`;
+  
+        // Show modal
+        document.getElementById('paymentModal').classList.remove('hidden');
+      });
+    });
+  
+    // ✅ Close the modal
+    function closeModal() {
+      document.getElementById('paymentModal').classList.add('hidden');
+    }
+  
+    // Optional: Close modal on ESC key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+  </script>
+  
+ 
+  <footer class="site-footer">
+    <div class="footer-container">
+  
+      <!-- Column 1 -->
+      <div class="footer-column">
+        <h3>P-Tech Warranty</h3>
+        <p>Professional smartphone repair and warranty services in Mukuyu, Murang'a. We provide reliable, affordable warranty plans for students and professionals.</p><br>
+        <p><i class="fas fa-map-marker-alt"></i> Mukuyu, Murang'a, Kenya</p>
+        <p><i class="fas fa-phone-alt"></i> +254 704 718140 / +254 787 971161</p>
+        <p><i class="fas fa-envelope"></i> peconne254@gmail.com</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="warranty.html">Warranty Plans</a></li>
+          <li><a href="claim.html">Submit Claim</a></li>
+          <li><a href="check.html">Check Warranty</a></li>
+          <li><a href="services.html">Our Services</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="reviews.html">Customer Reviews</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+  
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-socials">
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://wa.me/254704718140" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      <p class="copyright-text">&copy; 2025 P-Tech Warranty. All Rights Reserved.</p>
+    </div>       
+  </footer>
+</body>
+</html>

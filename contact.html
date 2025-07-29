@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P-Tech Warranty Reviews</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <body>
+    <header class="site-header">
+      <div class="header-top">
+        <div class="logo">P-Tech Warranty</div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+      </div>
+      <nav class="navbar" id="navbar">
+        <a href="index.html">Home</a>
+        <a href="warranty.html">Warranty Plan</a>
+        <a href="claim.html">Claim</a>
+        <a href="partners.html">Shop Partners</a>
+        <a href="check.html">Warranty Checker</a>
+        <a href="admin.html">Admin</a>
+        <a href="services.html">Services</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+      <section class="contact-intro-section">
+        <div class="container">
+          <h2 class="contact-intro-title">Contact Us</h2>
+          <p class="contact-intro-subtitle">
+            Get in touch with our team for warranty services, repairs, or any questions.
+            We're here to help you protect your smartphone investment.
+          </p>
+        </div>
+      </section>   
+      
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-cards-grid">
+        <div class="contact-card">
+          <div class="icon-circle"><i class="fas fa-map-marker-alt"></i></div>
+          <h3>Visit Our Location</h3>
+          <p>Mukuyu Town Center<br>Murang'a County, Kenya<br>Near Mukuyu Market</p>
+          <button class="contact-btn">Get Directions</button>
+        </div>
+      
+        <div class="contact-card">
+          <div class="icon-circle"><i class="fas fa-phone-alt"></i></div>
+          <h3>Call Us</h3>
+          <p>+254 704 718 140<br>+254 787 971 161<br>Mon–Sat: 8AM–6PM</p>
+          <button class="contact-btn">Call Now</button>
+        </div>
+      
+        <div class="contact-card">
+          <div class="icon-circle"><i class="fas fa-envelope"></i></div>
+          <h3>Email Us</h3>
+          <p>ptechwarranty@gmail.com<br>peconne254@gmail.com<br>Response within 24 hours</p>
+          <button class="contact-btn">Send Email</button>
+        </div>
+      
+        <div class="contact-card">
+          <div class="icon-circle"><i class="fas fa-clock"></i></div>
+          <h3>Business Hours</h3>
+          <p>Mon–Fri: 8AM–8PM<br>Saturday: 8AM–7PM<br>Sunday: Closed</p>
+          <button class="contact-btn">View Schedule</button>
+        </div>
+      </div>     
+      
+      <!-- Contact Form & Map/FAQs -->
+      <div class="contact-form-map">
+        <!-- Message Form -->
+        <div class="contact-form-card">
+          <h3>Send us a Message</h3>
+          <p>Fill out the form below and we’ll get back to you as soon as possible</p>
+          <form id="contact-form">
+            <div class="form-group two-columns">
+              <div>
+                <label for="full-name">Full Name *</label>
+                <input type="text" id="full-name" required placeholder="Enter your full name" />
+              </div>
+              <div>
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" required placeholder="your.email@example.com" />
+              </div>
+            </div>
+            <div class="form-group two-columns">
+              <div>
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" placeholder="+254 700 000 000" />
+              </div>
+              <div>
+                <label for="inquiry">Inquiry Type</label>
+                <select id="inquiry">
+                  <option value="general">General Inquiry</option>
+                  <option value="warranty">Warranty Claim</option>
+                  <option value="repair">Repair Booking</option>
+                  <option value="support">Technical Support</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject *</label>
+              <input type="text" id="subject" required placeholder="Brief description of your inquiry" />
+            </div>
+            <div class="form-group">
+              <label for="message">Message *</label>
+              <textarea id="message" required placeholder="Please provide details about your inquiry..."></textarea>
+            </div>
+            <button type="submit" class="contact-submit-btn">Send Message ✈️</button>
+          </form>
+        </div>
+
+        <!-- Map & Quick Info -->
+        <div class="map-faqs-column">
+
+          <!-- Find Us -->
+          <div class="info-card">
+            <h3>Find Us</h3>
+            <p>Visit our repair center in Mukuyu, Murang'a</p>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.96050603817!2d37.148155!3d-0.718832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182894a2382e2199%3A0xd2c2183f8a6819b1!2sMukuyu%2C%20Murang&#39;a!5e0!3m2!1sen!2ske!4v1718055037089!5m2!1sen!2ske"
+              width="100%" height="180" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <ul class="location-notes">
+              <li>📍 Located in the heart of Mukuyu town center</li>
+              <li>🚗 Free parking available</li>
+              <li>🚌 Accessible by public transport</li>
+              <li>♿ Wheelchair accessible</li>
+            </ul>
+          </div>
+
+          <!-- Quick Answers -->
+          <div class="info-card">
+            <h3>Quick Answers</h3>
+            <p>Common questions and answers</p>
+            <strong>How long do repairs take?</strong>
+            <p>Most repairs are completed within 24–48 hours depending on your warranty plan.</p>
+            <strong>Do you provide loaner devices?</strong>
+            <p>Yes, premium plan members get access to loaner devices during repairs.</p>
+            <strong>What payment methods do you accept?</strong>
+            <p>We accept cash, M-Pesa, bank transfers, and major credit cards.</p>
+          </div>
+
+          <!-- Follow Us -->
+          <div class="info-card">
+            <h3>Follow Us</h3>
+            <p>Stay updated with our latest news and offers</p>
+            <div class="social-buttons">
+              <a href="#" class="social-btn">📘 Facebook</a>
+              <a href="#" class="social-btn">🌟 Twitter</a>
+              <a href="#" class="social-btn">📸 Instagram</a>
+            </div>
+          </div>  
+        </div>
+      </div>
+
+    </div>
+  </section>
+<script>
+function toggleMenu() {
+      const navbar = document.getElementById('navbar');
+      navbar.classList.toggle('active');
+    }
+    document.querySelectorAll('.navbar a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navbar').classList.remove('active');
+  });
+});
+
+</script>
+
+<a href="https://wa.me/+254704718140" class="whatsapp-float" target="_blank" title="Chat with Support">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+</body>
+
+<footer class="site-footer">
+    <div class="footer-container">
+  
+      <!-- Column 1 -->
+      <div class="footer-column">
+        <h3>P-Tech Warranty</h3>
+        <p>Professional smartphone repair and warranty services in Mukuyu, Murang'a. We provide reliable, affordable warranty plans for students and professionals.</p><br>
+        <p><i class="fas fa-map-marker-alt"></i> Mukuyu, Murang'a, Kenya</p>
+        <p><i class="fas fa-phone-alt"></i> +254 704 718140 / +254 787 971161</p>
+        <p><i class="fas fa-envelope"></i> peconne254@gmail.com</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="warranty.html">Warranty Plans</a></li>
+          <li><a href="claim.html">Submit Claim</a></li>
+          <li><a href="check.html">Check Warranty</a></li>
+          <li><a href="services.html">Our Services</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="reviews.html">Customer Reviews</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+  
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-socials">
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://wa.me/254704718140" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      <p class="copyright-text">&copy; 2025 P-Tech Warranty. All Rights Reserved.</p>
+    </div>       
+  </footer>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>P-Tech Partner Program</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  </head>
+<body>
+  <header class="site-header">
+    <div class="header-top">
+      <div class="logo">P-Tech Warranty</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </div>
+    <nav class="navbar" id="navbar">
+      <a href="index.html">Home</a>
+      <a href="warranty.html">Warranty Plan</a>
+      <a href="claim.html">Claim</a>
+      <a href="partners.html">Shop Partners</a>
+      <a href="check.html">Warranty Checker</a>
+      <a href="admin.html">Admin</a>
+      <a href="services.html">Services</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="container my-5">
+    <!-- 🔰 Partner Program Intro -->
+    <section class="section-intro text-center mb-5">
+      <h2>📱 P-Tech Partner Program</h2>
+      <p class="lead">Earn <strong>25% commission</strong> every time a customer buys a phone from your shop and registers for a P-Tech Warranty.</p>
+    </section>
+  
+    <!-- 💡 Partner Benefits -->
+    <section class="row text-center mb-4">
+      <div class="col-md-4 mb-3">
+        <div class="card p-4">
+          <h5 class="text-success">💼 For All Sellers</h5>
+          <p>Partner with P-Tech whether you're a small shop, outlet, or reseller.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card p-4">
+          <h5 class="text-warning">💰 25% Commission</h5>
+          <p>Earn instantly when a customer activates a warranty via your shop.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card p-4">
+          <h5 class="text-info">📋 Track Sales</h5>
+          <p>All submissions are visible in the dashboard and sent via email.</p>
+        </div>
+      </div>
+    </section>
+  
+    <!-- 📝 Warranty Registration Form -->
+    <section class="form-section">
+      <h4 class="mb-4">📄 Register a Customer Warranty</h4>
+      <form id="shopPartnerForm" class="row g-3 needs-validation was-validated" novalidate>
+        <div class="col-md-6">
+          <label class="form-label">Shop Name</label>
+          <input type="text" class="form-control" name="shopName" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Shop Seller Name</label>
+          <input type="text" class="form-control" name="sellerName" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Seller Phone</label>
+          <input type="tel" class="form-control" name="sellerPhone" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Shop Location</label>
+          <input type="text" class="form-control" name="location" required>
+        </div>
+  
+        <div class="col-12 mt-4">
+          <h5 class="text-primary">Customer Details</h5>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Customer Name</label>
+          <input type="text" class="form-control" name="customerName" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Customer Phone</label>
+          <input type="tel" class="form-control" name="customerPhone" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Device Brand/Model</label>
+          <input type="text" class="form-control" name="deviceModel" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Serial Number (IMEI)</label>
+          <input type="text" class="form-control" name="serialNumber" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Is the Customer a Student?</label>
+          <select class="form-select" name="isStudent" required>
+            <option value="">Choose...</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Warranty Plan</label>
+          <select class="form-select" name="warrantyPlan" id="warrantyPlan" required>
+            <option value="">Choose...</option>
+            <optgroup label="Student Plans">
+              <option value="Student - 6 Months" data-price="500">Student - 6 Months</option>
+              <option value="Student - 1 Year" data-price="800">Student - 1 Year</option>
+            </optgroup>
+            <optgroup label="Regular Plans">
+              <option value="Regular - 6 Months" data-price="600">Regular - 6 Months</option>
+              <option value="Regular - 1 Year" data-price="1000">Regular - 1 Year</option>
+            </optgroup>
+            <optgroup label="Business Plans">
+              <option value="Business - 1 Year" data-price="2500">Business - 1 Year</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="col-md-6 d-none" id="studentIdContainer">
+          <label class="form-label">Student ID Number</label>
+          <input type="text" class="form-control" name="studentId">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Amount Paid</label>
+          <input type="number" class="form-control" name="amount" id="amountPaid" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Your Commission (25% of Amount Paid)</label>
+          <input type="text" class="form-control" id="commissionAmount" readonly>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Referral Code (if any)</label>
+          <input type="text" class="form-control" name="referralCode">
+        </div>
+        <div class="col-12">
+          <label class="form-label">Upload Payment Proof (Optional)</label>
+          <input type="file" class="form-control" name="paymentProof" accept="image/*">
+        </div>
+        <div class="col-12 text-center mt-4">
+          <button type="submit" class="btn btn-primary px-5 py-2" id="submitBtn">
+            <span id="submitText">Submit & Register Warranty</span>
+            <span id="submitSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+      <div id="shopFormSuccess" class="alert alert-success text-center mt-4 d-none">
+        ✅ Customer warranty registered successfully! You will receive confirmation shortly.
+      </div>
+    </section>
+  
+    <!-- 🎯 Partner Enhancements -->
+    <section class="partner-enhancements container my-5">
+      <div class="row g-4">
+  
+        <!-- FAQ Section -->
+        <div class="col-md-6 col-lg-5">
+          <div class="card shadow-sm p-4 h-100">
+            <h5 class="text-primary mb-3">❓ Frequently Asked Questions</h5>
+            <details class="mb-2"><summary>📦 What is covered under the warranty?</summary><p>Replacment of Charging System, Battery and Screen Replacement.</p></details>
+            <details class="mb-2"><summary>🕐 How long does the process take?</summary><p>Within 24 business hours, confirmation email will be sent to the customer.</p></details>
+            <details><summary>💰 When do I earn my commission?</summary><p>Instantly after warranty activation via your shop submission.</p></details>
+          </div>
+        </div>
+  
+        <!-- Timeline -->
+        <div class="col-md-6 col-lg-5 offset-lg-1">
+          <div class="card shadow-sm p-4 h-100">
+            <h5 class="text-success mb-3">📆 Registration Timeline</h5>
+            <ul class="timeline list-unstyled m-0">
+              <li><strong>📝 Day 0:</strong> Form submitted successfully</li>
+              <li><strong>📧 Day 1:</strong> Email confirmation sent to customer</li>
+              <li><strong>🔍 Day 2:</strong> Internal review completed</li>
+              <li><strong>✅ Day 3:</strong> Registration approved or issue flagged</li>
+            </ul>
+          </div>
+        </div>
+  
+        <!-- Print/Save Button -->
+        <div class="col-12 text-center mt-4">
+          <button onclick="window.print()" class="btn btn-secondary">🖨️ Print This Page</button>
+        </div>
+      </div>
+    </section>
+      </main>
+  
+        <script type="module" src="shopPartner.js"></script>
+       
+        
+        <a href="https://wa.me/+254704718140" class="whatsapp-float" target="_blank" title="Chat with Support">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        
+      </body>
+
+       <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>P-Tech Warranty</h3>
+        <p>Professional smartphone repair and warranty services in Mukuyu, Murang'a. We provide reliable, affordable warranty plans for students and professionals.</p>
+        <p><i class="fas fa-map-marker-alt"></i> Mukuyu, Murang'a, Kenya</p>
+        <p><i class="fas fa-phone-alt"></i> +254 704 718140 / +254 787 971161</p>
+        <p><i class="fas fa-envelope"></i> peconne254@gmail.com</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="warranty.html">Warranty Plans</a></li>
+          <li><a href="claim.html">Submit Claim</a></li>
+          <li><a href="check.html">Check Warranty</a></li>
+          <li><a href="services.html">Our Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="reviews.html">Customer Reviews</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-socials">
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://wa.me/254704718140" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      <p class="copyright-text">&copy; 2025 P-Tech Warranty. All Rights Reserved.</p>
+    </div>
+  </footer>
+  <script>
+    // ✅ Toggle mobile navigation menu
+    function toggleMenu() {
+      const navbar = document.getElementById('navbar');
+      navbar.classList.toggle('active');
+    }
+  
+    // ✅ Close navbar on link click (mobile)
+    document.querySelectorAll('.navbar a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navbar').classList.remove('active');
+      });
+    });
+  </script>
+  
+</body>
+      </html>
+      

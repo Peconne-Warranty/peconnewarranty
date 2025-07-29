@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Check Warranty - P-Tech Warranty</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-top">
+      <div class="logo">P-Tech Warranty</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </div>
+    <nav class="navbar" id="navbar">
+      <a href="index.html">Home</a>
+      <a href="warranty.html">Warranty Plan</a>
+      <a href="claim.html">Claim</a>
+      <a href="partners.html">Shop Partners</a>
+      <a href="check.html">Warranty Checker</a>
+      <a href="admin.html">Admin</a>
+      <a href="services.html">Services</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+<!-- Header Section -->
+<section class="check-header">
+  <div class="container">
+    <h1>Check Your Warranty Status</h1>
+    <p>Enter your Phone Number or National ID Number to view your warranty details.</p>
+  </div>
+</section>
+
+<!-- Check Warranty Form -->
+<section class="check-form-section">
+  <div class="container">
+    <form class="check-form" id="warrantyCheckForm">
+      <div class="form-group">
+        <label for="phoneNumber"><i class="fas fa-phone"></i> Phone Number</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter Phone Number" />
+      </div>
+
+      <p style="text-align: center; font-weight: bold;">OR</p>
+
+      <div class="form-group">
+        <label for="idNumber"><i class="fas fa-id-card"></i> National ID Number</label>
+        <input type="text" id="idNumber" name="idNumber" placeholder="Enter National ID" />
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="primary-btn">Check Warranty</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Results Section -->
+<div id="warrantyResult" class="result-container">
+  <div class="result-header">
+    <h3>Warranty Details</h3>
+    <!-- Close Button -->
+    <button class="close-btn">×</button>
+  </div>
+  <div class="result-body">
+    <!-- Warranty details will be inserted here dynamically -->
+  </div>
+</div>
+
+
+<!-- Notes Section -->
+<section class="check-notes">
+  <div class="container">
+    <h3>Important Notes</h3>
+    <ul>
+      <li>Ensure your Serial Number or ID is correct.</li>
+      <li>Only registered warranty users can view their status.</li>
+      <li>Need help? <a href="contact.html">Contact support</a>.</li>
+    </ul>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>P-Tech Warranty</h3>
+        <p>Professional smartphone repair and warranty services in Mukuyu, Murang'a. We provide reliable, affordable warranty plans for students and professionals.</p>
+        <p><i class="fas fa-map-marker-alt"></i> Mukuyu, Murang'a, Kenya</p>
+        <p><i class="fas fa-phone-alt"></i> +254 704 718140 / +254 787 971161</p>
+        <p><i class="fas fa-envelope"></i> peconne254@gmail.com</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="warranty.html">Warranty Plans</a></li>
+          <li><a href="claim.html">Submit Claim</a></li>
+          <li><a href="checker.html">Check Warranty</a></li>
+          <li><a href="services.html">Our Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="reviews.html">Customer Reviews</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-socials">
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://wa.me/254704718140" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      <p class="copyright-text">&copy; 2025 P-Tech Warranty. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    
+    function toggleMenu() {
+      const navbar = document.getElementById('navbar');
+      navbar.classList.toggle('active');
+    }
+    document.querySelectorAll('.navbar a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navbar').classList.remove('active');
+  });
+});
+
+const closeBtn = document.querySelector('.close-btn');
+if (closeBtn) {
+  closeBtn.addEventListener('click', () => {
+    resultDiv.classList.remove('show');  // Hide the result container when close is clicked
+  });
+}
+  </script>
+
+<script src="check.js" type="module"></script>
+</body>
+</html>

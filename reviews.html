@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P-Tech Warranty Reviews</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css"/>
+    <!-- Bootstrap example -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <div class="logo">P-Tech Warranty</div>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+  </div>
+  <nav class="navbar" id="navbar">
+    <a href="index.html">Home</a>
+    <a href="warranty.html">Warranty Plan</a>
+    <a href="claim.html">Claim</a>
+    <a href="partners.html">Shop Partners</a>
+    <a href="check.html">Warranty Checker</a>
+    <a href="admin.html">Admin</a>
+    <a href="services.html">Services</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+  <section class="reviews-section">
+    <h2>Customer Reviews</h2>
+    <p>
+      See what our customers say about our warranty services and repair quality.
+      Your feedback helps us improve and serve you better.
+    </p>
+  
+    <!-- Review Summary -->
+    <div class="review-summary">
+      <!-- Average Rating -->
+      <div class="summary-box center">
+        <h1 id="averageRating" class="rating-value">0.0</h1>
+        <div id="averageStars" class="rating-stars">★★★★★</div>
+        <p>Based on <span id="reviewCount">0</span> reviews</p>
+      </div>
+  
+      <!-- Star Breakdown -->
+      <div class="summary-box breakdown">
+        <div>5 ★ <progress id="star5" max="100" value="0"></progress> <span id="count5">0</span></div>
+        <div>4 ★ <progress id="star4" max="100" value="0"></progress> <span id="count4">0</span></div>
+        <div>3 ★ <progress id="star3" max="100" value="0"></progress> <span id="count3">0</span></div>
+        <div>2 ★ <progress id="star2" max="100" value="0"></progress> <span id="count2">0</span></div>
+        <div>1 ★ <progress id="star1" max="100" value="0"></progress> <span id="count1">0</span></div>
+      </div>
+  
+      <!-- Recommendation -->
+      <div class="summary-box center">
+        <h2 id="recommendation" class="recommend">0%</h2>
+        <p>Customers recommend us</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Feedback Heading -->
+  <div class="feedback-heading">
+    <h2>Customer Feedback</h2>
+  </div>
+  
+  <!-- Main Two-Column Layout -->
+  <div class="reviews-main-container">
+    <!-- Feedback Display -->
+    <div id="feedback-container">
+      <!-- 🌀 Loading Spinner -->
+      <div id="loading-spinner" style="display:none; text-align:center; padding:1em;">
+        <div class="spinner"></div>
+        <p>Loading reviews...</p>
+      </div>
+      <!-- Reviews will be injected here -->
+    </div>
+  
+    <!-- Review Submission Form -->
+    <form id="review-form">
+      <h3>Write a Review</h3>
+      <h6>Share your experience with P-Tech Warranty</h6>
+  
+      <label for="name">Name*</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email*</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="device">Device Model</label>
+      <input type="text" id="device" name="device">
+  
+      <label for="rating">Rating*</label>
+      <select id="rating" name="rating" required>
+        <option value="5">5 - Excellent</option>
+        <option value="4">4 - Good</option>
+        <option value="3">3 - Average</option>
+        <option value="2">2 - Poor</option>
+        <option value="1">1 - Terrible</option>
+      </select>
+  
+      <label for="title">Review Title</label>
+      <input type="text" id="title" name="title">
+  
+      <label for="review">Your Review*</label>
+      <textarea id="review" name="review" rows="5" required></textarea>
+  
+      <button type="submit" id="submitBtn">Submit Review</button>
+      <div id="form-spinner" style="display:none; text-align:center; margin-top:1em;">
+        <div class="spinner"></div>
+        <p>Submitting your review...</p>
+      </div>
+    </form>
+  </div> 
+
+  <script type="module">
+    // Firebase & Firestore initialization
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, onSnapshot, query, orderBy,
+      serverTimestamp, getDocs, deleteDoc, doc, updateDoc, getDoc
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyBFynS9-iYS7GxTeCzq-QPi9HRJr4qIRzY",
+      authDomain: "ptech-warranty-website.firebaseapp.com",
+      projectId: "ptech-warranty-website",
+      storageBucket: "ptech-warranty-website.appspot.com",
+      messagingSenderId: "335295749830",
+      appId: "1:335295749830:web:2ba5d66219eb6f04d6c1c7",
+      measurementId: "G-NFKHFN19LZ"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    // DOM elements
+    const form = document.getElementById('review-form');
+    const container = document.getElementById('feedback-container');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const formSpinner = document.getElementById('form-spinner');
+    
+    let likeCounts = {};
+    
+    // 🧩 Render Reviews
+    function renderReviews(reviews) {
+      container.innerHTML = '';
+      reviews.forEach((r) => {
+        const id = r.id;
+        if (!(id in likeCounts)) likeCounts[id] = r.likes || 0;
+        const date = r.createdAt?.seconds
+          ? new Date(r.createdAt.seconds * 1000).toLocaleDateString()
+          : 'Date N/A';
+  
+        const card = document.createElement('div');
+        card.className = 'review-card';
+        card.innerHTML = `
+          <div class="review-header">
+            <strong>${r.name}</strong>
+            <small>${date}</small>
+            <div class="menu-wrapper">
+              <button class="menu-btn" onclick="toggleMenu('${id}')">⋮</button>
+              <div class="menu-options" id="menu-${id}">
+                <button onclick="editReview('${id}')">✏️ Edit</button>
+                <button onclick="deleteReview('${id}')">🗑️ Delete</button>
+              </div>
+            </div>
+          </div>
+          <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+          <div class="review-title">${r.title || ''}</div>
+          <div class="review-text">${r.text}</div>
+          <div class="review-model">${r.model || ''}</div>
+          <div class="review-actions">
+            <button onclick="likeReview('${id}')">👍 Helpful (<span id="like-count-${id}">${likeCounts[id]}</span>)</button>
+            <button onclick="toggleReply('${id}')">💬 Reply</button>
+            <button onclick="toggleMessages('${id}')">📂 View Replies</button>
+          </div>
+          <div class="reply-box" id="reply-box-${id}" style="display:none;">
+            <input type="text" id="reply-input-${id}" placeholder="Write a reply">
+            <button onclick="submitReply('${id}')">Send</button>
+          </div>
+          <div class="message-view" id="message-view-${id}" style="display:none;"></div>
+        `;
+        container.prepend(card);
+      });
+    }
+  
+    // ✅ Handle Form Submit
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+    
+      formSpinner.style.display = 'block';
+    
+      const newReview = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        model: form.device.value.trim(),
+        title: form.title.value.trim(),
+        text: form.review.value.trim(),
+        rating: parseInt(form.rating.value),
+        likes: 0,
+        createdAt: serverTimestamp()
+      };
+    
+      try {
+        await addDoc(collection(db, "reviews"), newReview);
+        alert("✅ Review submitted!");
+        form.reset();
+      } catch (err) {
+        console.error("❌ Submission error:", err);
+        alert("❌ Failed to submit review. See console.");
+      } finally {
+        formSpinner.style.display = 'none';
+      }
+    });
+  
+    // 🔄 Listen for changes
+    const reviewQuery = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
+    loadingSpinner.style.display = 'block';
+    onSnapshot(reviewQuery, snapshot => {
+      const reviews = [];
+      snapshot.forEach(doc => {
+        reviews.push({ ...doc.data(), id: doc.id });
+      });
+    
+      renderReviews(reviews);
+      loadingSpinner.style.display = 'none';
+    
+      // Update summary
+      const total = reviews.length;
+      const ratings = reviews.map(r => r.rating);
+      const avg = total ? (ratings.reduce((a, b) => a + b, 0) / total).toFixed(1) : '0.0';
+      document.getElementById('averageRating').textContent = avg;
+      document.getElementById('averageStars').innerHTML = '★'.repeat(Math.round(avg)) + '☆'.repeat(5 - Math.round(avg));
+      document.getElementById('reviewCount').textContent = total;
+    
+      const starCounts = [0, 0, 0, 0, 0];
+      ratings.forEach(r => starCounts[r - 1]++);
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById(`count${i}`).textContent = starCounts[i - 1];
+        const bar = document.getElementById(`star${i}`);
+        if (bar) {
+          bar.value = starCounts[i - 1];
+          bar.max = total;
+        }
+      }
+    });
+  
+    // Helper functions: Like, Menu, Replies...
+    window.likeReview = function (id) {
+      likeCounts[id]++;
+      const el = document.getElementById(`like-count-${id}`);
+      if (el) el.textContent = likeCounts[id];
+    };
+  
+    window.toggleReply = function (id) {
+      const box = document.getElementById(`reply-box-${id}`);
+      box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    };
+  
+    window.toggleMessages = async function (id) {
+      const msgBox = document.getElementById(`message-view-${id}`);
+      if (msgBox.style.display === 'block') return msgBox.style.display = 'none';
+      msgBox.innerHTML = 'Loading replies...';
+      msgBox.style.display = 'block';
+    
+      const msgs = await getDocs(collection(db, "messages"));
+      const replies = [];
+      msgs.forEach(doc => {
+        const d = doc.data();
+        if (d.reviewId === id) replies.push(d);
+      });
+      msgBox.innerHTML = replies.length
+        ? replies.map(r => `<div style="margin-left:20px;">🗨️ ${r.text}</div>`).join('')
+        : "<i>No replies yet</i>";
+    };
+  
+    window.submitReply = async function (id) {
+      const input = document.getElementById(`reply-input-${id}`);
+      const reply = input.value.trim();
+      if (!reply) return;
+      try {
+        await addDoc(collection(db, "messages"), {
+          reviewId: id,
+          text: reply,
+          createdAt: serverTimestamp()
+        });
+        input.value = '';
+        alert("✅ Reply submitted!");
+      } catch (err) {
+        console.error("Reply error", err);
+        alert("❌ Could not submit reply.");
+      }
+    };
+  
+    window.toggleMenu = function (id) {
+      document.querySelectorAll('.menu-options').forEach(m => {
+        if (m.id !== `menu-${id}`) m.classList.remove('show');
+      });
+      const menu = document.getElementById(`menu-${id}`);
+      menu.classList.toggle('show');
+    };
+  
+    window.deleteReview = async function (id) {
+      if (confirm("Delete this review?")) {
+        await deleteDoc(doc(db, "reviews", id));
+        alert("✅ Review deleted.");
+      }
+    };
+  
+    window.editReview = async function (id) {
+      const ref = doc(db, "reviews", id);
+      const snap = await getDoc(ref);
+      if (!snap.exists()) return alert("Review not found.");
+      const data = snap.data();
+      form.name.value = data.name;
+      form.email.value = data.email;
+      form.device.value = data.model;
+      form.rating.value = data.rating;
+      form.title.value = data.title;
+      form.review.value = data.text;
+  
+      form.removeEventListener('submit', handleSubmit);
+      form.addEventListener('submit', async function update(e) {
+        e.preventDefault();
+        await updateDoc(ref, {
+          name: form.name.value,
+          email: form.email.value,
+          model: form.device.value,
+          title: form.title.value,
+          text: form.review.value,
+          rating: parseInt(form.rating.value),
+          updatedAt: serverTimestamp()
+        });
+        alert("✅ Review updated!");
+        form.reset();
+        form.removeEventListener('submit', update);
+        form.addEventListener('submit', handleSubmit);
+      });
+    };
+  
+    function handleSubmit(e) {
+      e.preventDefault();
+      // This is intentionally left blank; logic already above
+    }
+  
+    // Close menu if clicked outside
+    window.addEventListener('click', e => {
+      if (!e.target.matches('.menu-btn')) {
+        document.querySelectorAll('.menu-options').forEach(m => m.classList.remove('show'));
+      }
+    });
+  
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.menu-options').forEach(m => m.classList.remove('show'));
+      }
+    });
+  </script> 
+
+    <!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-container">
+  
+      <!-- Column 1 -->
+      <div class="footer-column">
+        <h3>P-Tech Warranty</h3>
+        <p>Professional smartphone repair and warranty services in Mukuyu, Murang'a. We provide reliable, affordable warranty plans for students and professionals.</p><br>
+        <p><i class="fas fa-map-marker-alt"></i> Mukuyu, Murang'a, Kenya</p>
+        <p><i class="fas fa-phone-alt"></i> +254 704 718140 / +254 787 971161</p>
+        <p><i class="fas fa-envelope"></i> peconne254@gmail.com</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="warranty.html">Warranty Plans</a></li>
+          <li><a href="claim.html">Submit Claim</a></li>
+          <li><a href="check.html">Check Warranty</a></li>
+          <li><a href="services.html">Our Services</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="reviews.html">Customer Reviews</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+  
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-socials">
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://wa.me/254704718140" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      <p class="copyright-text">&copy; 2025 P-Tech Warranty. All Rights Reserved.</p>
+    </div>       
+  </footer>
+  
+    <script>
+  function toggleMenu() {
+    const navbar = document.getElementById('navbar');
+    navbar.classList.toggle('active');
+  }
+
+  document.querySelectorAll('.navbar a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navbar').classList.remove('active');
+    });
+  });
+</script>
+
+</body>
+</html>
